@@ -20,7 +20,7 @@ const CardComponent: React.FC<CardProps> = ({ character }) => {
   const iconColor = (character: Character) => {
     switch (character.status) {
       case "Alive":
-        return "bg-lime-400";
+        return "bg-green-500";
       case "unknown":
         return "bg-yellow-500";
       case "Dead":
@@ -44,9 +44,7 @@ const CardComponent: React.FC<CardProps> = ({ character }) => {
           <span>Status:</span>
           <div className="flex gap-3 items-center">
             <div
-              className={`w-4 h-4 bg-red-500 rounded-full ${iconColor(
-                character
-              )}`}
+              className={`w-4 h-4 rounded-full ${iconColor(character)}`}
             ></div>
             <span className="card-left-state-text">{character.status}</span>
           </div>

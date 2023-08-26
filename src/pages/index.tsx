@@ -79,7 +79,6 @@ export default function Home(): JSX.Element {
     if (!welcome) {
       getData();
     }
-    console.log("r");
   }, [welcome]);
 
   useEffect(() => {
