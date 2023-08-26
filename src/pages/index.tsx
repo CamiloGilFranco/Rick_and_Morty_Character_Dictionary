@@ -78,6 +78,7 @@ export default function Home(): JSX.Element {
     if (!welcome) {
       getData();
     }
+    console.log("r");
   }, [welcome]);
 
   useEffect(() => {
@@ -153,7 +154,7 @@ export default function Home(): JSX.Element {
     setCurrentPage(1);
     setServerPage(1);
 
-    if (!welcome) {
+    if (!welcome && !allData.length) {
       getData();
     }
 
@@ -169,7 +170,7 @@ export default function Home(): JSX.Element {
   };
 
   return (
-    <div className="text-white h-full w-full flex flex-col items-center justify-center">
+    <div className="text-white h-full  ">
       <SearchBarComponent
         name={name}
         setName={setName}
