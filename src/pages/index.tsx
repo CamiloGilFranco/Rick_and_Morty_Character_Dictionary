@@ -62,6 +62,7 @@ export default function Home(): JSX.Element {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [serverPage, setServerPage] = useState<number>(1);
   const [getDataFinished, setGetDataFinished] = useState(false);
+  const [empty, setEmpty] = useState(false);
 
   const pageSize = 6;
   const serverResultSize = 20;
@@ -111,8 +112,14 @@ export default function Home(): JSX.Element {
         page: serverPage,
       });
 
-      setAllData([...allData, ...data?.characters?.results]);
+      if (data?.characters?.results.length === 0) {
+        setEmpty(true);
+        setQueryLoading(false);
+        return;
+      }
+
       setQueryLoading(false);
+      setAllData([...allData, ...data?.characters?.results]);
       setGetDataFinished(true);
     } catch (error) {
       setQueryError(true);
@@ -153,6 +160,7 @@ export default function Home(): JSX.Element {
     setShowData([]);
     setCurrentPage(1);
     setServerPage(1);
+    setQueryError(false);
 
     if (!welcome && !allData.length) {
       getData();
@@ -179,7 +187,7 @@ export default function Home(): JSX.Element {
       />
       {showData.length ? (
         <div className="h-full w-full flex justify-center flex-col items-center ">
-          <div className="w-11/12 max-w-[1100px] flex flex-wrap items-center justify-center gap-4 py-5 ">
+          <div className="w-11/12 max-w-[1200px] flex flex-wrap items-center justify-center gap-4 py-5 ">
             {showData.map((character) => {
               return <CardComponent character={character} key={character.id} />;
             })}
@@ -214,7 +222,8 @@ export default function Home(): JSX.Element {
       !queryLoading &&
       !queryError &&
       currentPage === 1 &&
-      serverPage === 1 ? (
+      serverPage === 1 &&
+      empty ? (
         <NotResultsComponent />
       ) : null}
       {queryLoading ? <LoaderComponent /> : null}

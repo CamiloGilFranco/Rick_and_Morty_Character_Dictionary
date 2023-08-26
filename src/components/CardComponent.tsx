@@ -20,12 +20,11 @@ const CardComponent: React.FC<CardProps> = ({ character }) => {
   const iconColor = (character: Character) => {
     switch (character.status) {
       case "Alive":
-        return "bg-green-500";
+        return "bg-lime-500";
       case "unknown":
-        return "bg-red-500";
-      case "Dead":
         return "bg-yellow-500";
-
+      case "Dead":
+        return "bg-red-500";
       default:
         return "";
     }
