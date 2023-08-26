@@ -8,6 +8,7 @@ import NotResultsComponent from "@/components/NotResultsComponent";
 import LoaderComponent from "@/components/LoaderComponent";
 
 import { Inter } from "next/font/google";
+import ErrorComponent from "@/components/ErrorComponent";
 
 const inter = Inter({ subsets: ["latin"] });
 /* ${inter.className} */
