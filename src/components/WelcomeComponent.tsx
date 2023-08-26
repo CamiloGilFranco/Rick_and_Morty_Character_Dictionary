@@ -5,9 +5,9 @@ import welcome from "../assets/welcome.png";
 
 const WelcomeComponent: React.FC = () => {
   return (
-    <div className="h-[calc(100vh-185px)] flex flex-col items-center justify-around ">
+    <div className="flex flex-col items-center mt-8">
       <Image src={welcome} alt="" width={330} />
-      <h2 className="text-5xl font-bold">Welcome</h2>
+      <h2 className="text-5xl font-bold mt-8">Welcome</h2>
     </div>
   );
 };

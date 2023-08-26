@@ -4,8 +4,7 @@ import dance from "../assets/rick-and.gif";
 
 const LoaderComponent: React.FC = () => {
   return (
-    <div className="w-full h-[calc(100vh-238px)] flex items-center justify-center relative sm:h-[calc(100vh-185px)]">
-      <div className="w-full h-full bg-black bg-opacity-10"></div>
+    <div className="w-full flex items-center justify-center relative  h-96">
       <Image src={dance} alt="" className="absolute w-96" />
     </div>
   );
