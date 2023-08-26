@@ -1,15 +1,16 @@
 import React from "react";
-import logo from "../assets/Rick_and_Morty.png";
 import Image from "next/image";
 
-interface SearchBarProps {
+import logo from "../assets/Rick_and_Morty.png";
+
+interface SearchBarComponentProps {
   name: string;
   setName: (name: string) => void;
   handleSubmit: (event: React.FormEvent) => void;
   isInputError: boolean;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({
+const SearchBarComponent: React.FC<SearchBarComponentProps> = ({
   name,
   setName,
   handleSubmit,
@@ -44,4 +45,4 @@ const SearchBar: React.FC<SearchBarProps> = ({
   );
 };
 
-export default SearchBar;
+export default SearchBarComponent;
