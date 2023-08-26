@@ -25,17 +25,17 @@ const SearchBarComponent: React.FC<SearchBarComponentProps> = ({
           placeholder="Write a name..."
           value={name}
           onChange={(event) => setName(event.target.value)}
-          className="text-xl p-1 rounded-lg h-9 text-center border border-black"
+          className="text-xl p-1 rounded-lg h-9 text-center border border-black text-black"
         />
         <input
           type="submit"
           value="Search"
           onClick={handleSubmit}
-          className="h-9 rounded-xl w-24 text-xl cursor-pointer bg-gray-500 text-white border border-black hover:shadow-md"
+          className="h-9 rounded-xl w-24 text-xl cursor-pointer bg-gray-500 text-white border border-black hover:shadow-md "
         />
       </form>
       {isInputError ? (
-        <span className="text-red-500 mt-10 text-center">
+        <span className="text-red-500 mt-2 text-center font-bold">
           **You must type at least 2 characters to do the search
         </span>
       ) : (
