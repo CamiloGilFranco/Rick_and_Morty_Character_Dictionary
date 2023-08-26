@@ -1,38 +1,70 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Rick and Morty Character Search App
 
-## Getting Started
+![Logo](./public/favicon.ico)
 
-First, run the development server:
+Esta es una aplicación web desarrollada con Next.js, React, Tailwind CSS, npm, GraphQL y TypeScript que te permite buscar y explorar los diferentes personajes de la famosa serie animada "Rick and Morty". Con esta aplicación, podrás encontrar información detallada sobre los personajes, como su imagen, nombre, especie, estado y planeta de origen.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## Características
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Búsqueda de personajes por nombre, con un requisito mínimo de 2 caracteres.
+- Visualización de hasta 6 resultados coincidentes por búsqueda.
+- Detalles de cada personaje, incluyendo imagen, nombre, especie, estado y planeta de origen.
+- Paginación sencilla para mostrar más resultados si la búsqueda arroja más de 6 coincidencias.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Requisitos Previos
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+- Node.js: Asegúrate de tener Node.js instalado en tu máquina. Puedes descargarlo desde [nodejs.org](nodejs.org).
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Instalación
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+1. Clona este repositorio en tu máquina local utilizando el siguiente comando:
 
-## Learn More
+   ```
+   git clone https://github.com/CamiloGilFranco/Rick_and_Morty_Character_Dictionary.git
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+2. Ve al directorio del proyecto:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   ```
+   cd Rick_and_Morty_Character_Dictionary
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+3. Instala las dependencias utilizando npm:
+   ```
+   npm install
+   ```
 
-## Deploy on Vercel
+## Uso
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Inicia la aplicación en tu entorno de desarrollo local:
+   ```
+   npm run dev
+   ```
+2. Abre tu navegador web y accede a http://localhost:3000 para cargar la aplicación.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+3. En la página de inicio, verás un campo de búsqueda. Escribe al menos 2 caracteres y presiona Enter para buscar personajes.
+
+4. Se mostrará una lista de hasta 6 personajes que coincidan con tu búsqueda. Cada elemento de la lista muestra la imagen del personaje, su nombre, especie, estado y planeta de origen.
+
+5. Si la búsqueda devuelve más de 6 resultados, podrás navegar a través de las páginas de resultados utilizando la paginación proporcionada.
+
+## Despliegue en Vercel
+
+Esta aplicación está desplegada en Vercel. Puedes acceder a ella utilizando el siguiente enlace: https://rick-and-morty-character-dictionary.vercel.app/
+
+## Tecnologías Utilizadas
+
+- Next.js
+- React
+- Tailwind CSS
+- npm
+- GraphQL
+- TypeScript
+
+## Contribución
+
+Si encuentras errores o deseas contribuir a esta aplicación, ¡estamos abiertos a tus aportaciones! Siéntete libre de crear problemas (issues) y enviar pull requests.
+
+## Licencia
+
+Este proyecto está bajo la Licencia [Nombre de la Licencia]. Para más detalles, consulta el archivo LICENSE.

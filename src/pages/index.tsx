@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { gql } from "@apollo/client/core";
 import { useQuery } from "@apollo/client/react";
+import Image from "next/image";
 
 import SearchBarComponent from "@/components/SearchBarComponent";
 import WelcomeComponent from "@/components/WelcomeComponent";
@@ -10,12 +11,6 @@ import ErrorComponent from "@/components/ErrorComponent";
 import CardComponent from "@/components/CardComponent";
 import next from "../assets/next.svg";
 import prev from "../assets/prev.svg";
-
-import { Inter } from "next/font/google";
-import Image from "next/image";
-
-const inter = Inter({ subsets: ["latin"] });
-/* ${inter.className} */
 
 interface Character {
   id: string;
@@ -227,6 +222,7 @@ export default function Home(): JSX.Element {
       ) : null}
       {queryLoading ? <LoaderComponent /> : null}
       {queryError ? <ErrorComponent /> : null}
+      <ErrorComponent />
     </div>
   );
 }
