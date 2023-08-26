@@ -32,9 +32,15 @@ const CardComponent: React.FC<CardProps> = ({ character }) => {
   };
 
   return (
-    <div className="w-96 bg-gray-700 p-4 flex rounded-2xl">
+    <div className="w-96 h-44 bg-gray-700 p-4 flex rounded-2xl">
       <div>
-        <Image src={character.image} alt="" className="w-28 rounded-xl" />
+        <Image
+          src={character.image}
+          alt=""
+          width={120}
+          height={120}
+          className=" rounded-xl"
+        />
         <div>
           <span>Status:</span>
           <div className="flex gap-3 items-center">

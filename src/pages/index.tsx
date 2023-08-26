@@ -6,9 +6,13 @@ import SearchBarComponent from "@/components/SearchBarComponent";
 import WelcomeComponent from "@/components/WelcomeComponent";
 import NotResultsComponent from "@/components/NotResultsComponent";
 import LoaderComponent from "@/components/LoaderComponent";
+import ErrorComponent from "@/components/ErrorComponent";
+import CardComponent from "@/components/CardComponent";
+import next from "../assets/next.svg";
+import prev from "../assets/prev.svg";
 
 import { Inter } from "next/font/google";
-import ErrorComponent from "@/components/ErrorComponent";
+import Image from "next/image";
 
 const inter = Inter({ subsets: ["latin"] });
 /* ${inter.className} */
@@ -47,7 +51,7 @@ const GET_CHARACTERS_BY_NAME = gql`
   }
 `;
 
-export default function Home() {
+export default function Home(): JSX.Element {
   const [name, setName] = useState<string>("");
   const [isInputError, setIsInputError] = useState<boolean>(false);
   const [welcome, setWelcome] = useState<boolean>(true);
@@ -59,6 +63,35 @@ export default function Home() {
   const [serverPage, setServerPage] = useState<number>(1);
   const [getDataFinished, setGetDataFinished] = useState(false);
 
+  const pageSize = 6;
+  const serverResultSize = 20;
+
+  useEffect(() => {
+    renderData();
+  }, [currentPage]);
+
+  useEffect(() => {
+    getData();
+  }, [serverPage]);
+
+  useEffect(() => {
+    if (!welcome) {
+      getData();
+    }
+  }, [welcome]);
+
+  useEffect(() => {
+    if (getDataFinished) {
+      renderData();
+    }
+  }, [getDataFinished]);
+
+  useEffect(() => {
+    if (!allData.length) {
+      getData();
+    }
+  }, [allData]);
+
   const { refetch } = useQuery<CharacterData>(GET_CHARACTERS_BY_NAME, {
     skip: true,
   });
@@ -67,7 +100,6 @@ export default function Home() {
     if (welcome) {
       return;
     }
-    console.log("en getData");
 
     setGetDataFinished(false);
 
@@ -87,6 +119,25 @@ export default function Home() {
     }
   };
 
+  const renderData = async () => {
+    if (welcome) {
+      return;
+    }
+
+    setShowData([]);
+
+    const firstIndex = pageSize * currentPage - pageSize;
+    const lastIndex = currentPage * pageSize;
+
+    if (lastIndex > serverResultSize * serverPage) {
+      setServerPage(serverPage + 1);
+      return;
+    }
+
+    const charactersToShow = allData.slice(firstIndex, lastIndex);
+    setShowData(charactersToShow);
+  };
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
@@ -101,12 +152,20 @@ export default function Home() {
     setShowData([]);
     setCurrentPage(1);
     setServerPage(1);
-    if (!welcome) {
-      console.log("oli");
 
+    if (!welcome) {
       getData();
     }
+
     setWelcome(false);
+  };
+
+  const handleNext = () => {
+    setCurrentPage(currentPage + 1);
+  };
+
+  const handlePrevious = () => {
+    setCurrentPage(currentPage - 1);
   };
 
   return (
@@ -117,16 +176,48 @@ export default function Home() {
         handleSubmit={handleSubmit}
         isInputError={isInputError}
       />
-      {/* {welcome ? <WelcomeComponent /> : null} */}
-      {/* {!welcome &&
+      {showData.length ? (
+        <div className="h-full w-full flex justify-center flex-col items-center ">
+          <div className="w-11/12 max-w-[1100px] flex flex-wrap items-center justify-center gap-4 py-5 ">
+            {showData.map((character) => {
+              return <CardComponent character={character} key={character.id} />;
+            })}
+          </div>
+          <div className="flex gap-5 mb5">
+            <div>
+              {currentPage > 1 ? (
+                <Image
+                  src={prev}
+                  alt=""
+                  className="px-1 bg-lime-300 rounded-3xl w-20 h-10 cursor-pointer"
+                  onClick={handlePrevious}
+                />
+              ) : null}
+            </div>
+            <div>
+              {showData.length === 6 ? (
+                <Image
+                  src={next}
+                  alt=""
+                  className="px-1 bg-lime-300 rounded-3xl w-20 h-10 cursor-pointer"
+                  onClick={handleNext}
+                />
+              ) : null}
+            </div>
+          </div>
+        </div>
+      ) : null}
+      {welcome ? <WelcomeComponent /> : null}
+      {!welcome &&
       !showData.length &&
       !queryLoading &&
       !queryError &&
       currentPage === 1 &&
       serverPage === 1 ? (
         <NotResultsComponent />
-      ) : null} */}
+      ) : null}
       {queryLoading ? <LoaderComponent /> : null}
+      {queryError ? <ErrorComponent /> : null}
     </div>
   );
 }
