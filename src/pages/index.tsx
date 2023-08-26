@@ -5,6 +5,7 @@ import WelcomeComponent from "@/components/WelcomeComponent";
 
 import { Inter } from "next/font/google";
 import NotResultsComponent from "@/components/NotResultsComponent";
+import LoaderComponent from "@/components/LoaderComponent";
 
 const inter = Inter({ subsets: ["latin"] });
 /* ${inter.className} */
@@ -13,6 +14,7 @@ export default function Home() {
   const [name, setName] = useState<string>("");
   const [isInputError, setIsInputError] = useState<boolean>(false);
   const [welcome, setWelcome] = useState<boolean>(true);
+  const [queryLoading, setQueryLoading] = useState<boolean>(false);
 
   const handleSubmit = async (event: React.FormEvent) => {};
 
@@ -33,6 +35,7 @@ export default function Home() {
       serverPage === 1 ? (
         <NotResultsComponent />
       ) : null} */}
+      {queryLoading ? <LoaderComponent /> : null}
     </div>
   );
 }
