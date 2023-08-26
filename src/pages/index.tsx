@@ -4,6 +4,7 @@ import SearchBarComponent from "@/components/SearchBarComponent";
 import WelcomeComponent from "@/components/WelcomeComponent";
 
 import { Inter } from "next/font/google";
+import NotResultsComponent from "@/components/NotResultsComponent";
 
 const inter = Inter({ subsets: ["latin"] });
 /* ${inter.className} */
@@ -23,7 +24,15 @@ export default function Home() {
         handleSubmit={handleSubmit}
         isInputError={isInputError}
       />
-      {welcome ? <WelcomeComponent /> : null}
+      {/* {welcome ? <WelcomeComponent /> : null} */}
+      {/* {!welcome &&
+      !showData.length &&
+      !queryLoading &&
+      !queryError &&
+      currentPage === 1 &&
+      serverPage === 1 ? (
+        <NotResultsComponent />
+      ) : null} */}
     </div>
   );
 }
