@@ -180,7 +180,7 @@ export default function Home(): JSX.Element {
         isInputError={isInputError}
       />
       {showData.length ? (
-        <div className="h-full w-full flex justify-center flex-col items-center ">
+        <div className="h-full w-full flex justify-center flex-col items-center">
           <div className="w-11/12 max-w-[1200px] flex flex-wrap items-center justify-center gap-4 py-5 ">
             {showData.map((character) => {
               return <CardComponent character={character} key={character.id} />;
@@ -222,7 +222,6 @@ export default function Home(): JSX.Element {
       ) : null}
       {queryLoading ? <LoaderComponent /> : null}
       {queryError ? <ErrorComponent /> : null}
-      <ErrorComponent />
     </div>
   );
 }
