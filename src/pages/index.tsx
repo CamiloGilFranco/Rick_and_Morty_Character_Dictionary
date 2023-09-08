@@ -108,6 +108,10 @@ export default function Home(): JSX.Element {
       return;
     }
 
+    if (name.length < 2) {
+      return;
+    }
+
     setGetDataFinished(false);
 
     try {

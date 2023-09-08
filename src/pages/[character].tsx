@@ -45,7 +45,6 @@ const characterData = gql`
 
 const character = () => {
   const router = useRouter();
-  console.log(router.query.character);
 
   const { data, loading, error } = useQuery<Character>(characterData, {
     variables: { id: router.query.character },
