@@ -31,35 +31,47 @@ const CardComponent: React.FC<CardProps> = ({ character }) => {
   };
 
   return (
-    <div className="w-96 h-44 bg-gray-700 p-4 flex rounded-2xl">
-      <div>
-        <Image
-          src={character.image}
-          alt=""
-          width={120}
-          height={120}
-          className=" rounded-xl"
-        />
+    <div className="flex w-96 h-56 bg-gray-700 p-4 flex-col rounded-2xl justify-between items-center">
+      <div className="flex w-full">
         <div>
-          <span>Status:</span>
-          <div className="flex gap-3 items-center">
-            <div
-              className={`w-4 h-4 rounded-full ${iconColor(character)}`}
-            ></div>
-            <span className="card-left-state-text">{character.status}</span>
+          <Image
+            src={character.image}
+            alt=""
+            width={120}
+            height={120}
+            className=" rounded-xl"
+          />
+          <div>
+            <span>Status:</span>
+            <div className="flex gap-3 items-center">
+              <div
+                className={`w-4 h-4 rounded-full ${iconColor(character)}`}
+              ></div>
+              <span className="card-left-state-text">{character.status}</span>
+            </div>
+          </div>
+        </div>
+        <div className="w-full flex flex-col items-center justify-between ml-1">
+          <span className="font-bold text-2xl text-center">
+            {character.name}
+          </span>
+          <div className="flex flex-col items-center">
+            <span className="font-bold">Origin:</span>
+            <span className="text-center">{character.origin.name}</span>
+          </div>
+          <div className="flex flex-col items-center">
+            <span className="font-bold">Species:</span>
+            <span className="text-center">{character.species}</span>
           </div>
         </div>
       </div>
-      <div className="w-full flex flex-col items-center justify-between ml-1">
-        <span className="font-bold text-2xl text-center">{character.name}</span>
-        <div className="flex flex-col items-center">
-          <span className="font-bold">Origin:</span>
-          <span className="text-center">{character.origin.name}</span>
-        </div>
-        <div className="flex flex-col items-center">
-          <span className="font-bold">Species:</span>
-          <span className="text-center">{character.species}</span>
-        </div>
+      <div className="flex justify-center gap-3">
+        <span className="bg-white p-1 rounded-md w-28 flex justify-center align-middle cursor-pointer">
+          Details
+        </span>
+        <span className="bg-white p-1 rounded-md w-28 flex justify-center align-middle cursor-pointer">
+          Add Favorite
+        </span>
       </div>
     </div>
   );
