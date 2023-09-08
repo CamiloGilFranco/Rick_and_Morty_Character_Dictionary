@@ -11,6 +11,7 @@ import ErrorComponent from "@/components/ErrorComponent";
 import CardComponent from "@/components/CardComponent";
 import next from "../assets/next.svg";
 import prev from "../assets/prev.svg";
+import { useRouter } from "../../node_modules/next/router";
 
 interface Character {
   id: string;
@@ -61,6 +62,7 @@ export default function Home(): JSX.Element {
 
   const pageSize = 6;
   const serverResultSize = 20;
+  const router = useRouter();
 
   useEffect(() => {
     renderData();
