@@ -1,0 +1,57 @@
+/* .main {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  color: white;
+
+} */
+
+/* .card {
+  width: 90%;
+  max-width: 1000px;
+  min-height: 400px;
+  padding: 20px;
+  border: white 5px solid;
+  border-radius: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+} */
+
+/* .image {
+  border-radius: 20px;
+} */
+
+/* .data_container {
+  width: calc(100% - 370px);
+  min-height: 350px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+} */
+
+/* .title {
+  font-weight: 700;
+  font-size: 36px;
+} */
+
+/* .specie_container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  border-bottom: 1px solid white;
+}
+
+.places_container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  border-bottom: 1px solid white;
+} */
+
+.single_data {
+  font-weight: 700;
+  font-size: 22px;
+}

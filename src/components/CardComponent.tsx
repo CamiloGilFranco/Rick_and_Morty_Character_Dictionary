@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useRouter } from "next/router";
 import React from "react";
 
 interface Character {
@@ -29,6 +30,8 @@ const CardComponent: React.FC<CardProps> = ({ character }) => {
         return "";
     }
   };
+
+  const router = useRouter();
 
   return (
     <div className="flex w-96 h-56 bg-gray-700 p-4 flex-col rounded-2xl justify-between items-center">
@@ -66,10 +69,16 @@ const CardComponent: React.FC<CardProps> = ({ character }) => {
         </div>
       </div>
       <div className="flex justify-center gap-3">
-        <span className="bg-white p-1 rounded-md w-28 flex justify-center align-middle cursor-pointer">
+        <span
+          className="bg-white text-slate-950 p-1 rounded-md w-28 flex justify-center align-middle cursor-pointer font-bold hover:bg-slate-400"
+          onClick={() => router.push(`/${character.id}`)}
+        >
           Details
         </span>
-        <span className="bg-white p-1 rounded-md w-28 flex justify-center align-middle cursor-pointer">
+        <span
+          className="bg-white text-slate-950 p-1 rounded-md w-28 flex justify-center align-middle cursor-pointer font-bold hover:bg-slate-400"
+          onClick={() => router.push("/favorites")}
+        >
           Add Favorite
         </span>
       </div>
