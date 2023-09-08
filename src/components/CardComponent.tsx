@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React from "react";
+import { toast } from "react-toastify";
 
 interface Character {
   id: string;
@@ -17,7 +18,11 @@ interface CardProps {
   character: Character;
 }
 
-const CardComponent: React.FC<CardProps> = ({ character }) => {
+const CardComponent: React.FC<CardProps> = ({
+  character,
+  reRender,
+  setReRender,
+}) => {
   const iconColor = (character: Character) => {
     switch (character.status) {
       case "Alive":
@@ -33,8 +38,50 @@ const CardComponent: React.FC<CardProps> = ({ character }) => {
 
   const router = useRouter();
 
+  const handlerNewFavorite = () => {
+    if (!localStorage.getItem("favorites")) {
+      localStorage.setItem("favorites", JSON.stringify([character]));
+      toast.success(
+        "The character was added to your favorites list successfully"
+      );
+      return;
+    }
+
+    const savedData = JSON.parse(localStorage.getItem("favorites"));
+
+    const existingFavorite = savedData.some(
+      (element) => element.id === character.id
+    );
+
+    if (existingFavorite) {
+      toast.error("This character is already on your favorites list");
+    } else {
+      localStorage.setItem(
+        "favorites",
+        JSON.stringify([...savedData, character])
+      );
+      toast.success(
+        "The character was added to your favorites list successfully"
+      );
+    }
+  };
+
+  const handlerDeleteFavorite = () => {
+    const data = JSON.parse(localStorage.getItem("favorites"));
+
+    const index = data.findIndex((e) => e.id === character.id);
+
+    data.splice(index, 1);
+
+    localStorage.setItem("favorites", JSON.stringify(data));
+
+    toast.success("the character was removed from your favorites list");
+
+    setReRender(!reRender);
+  };
+
   return (
-    <div className="flex w-96 h-56 bg-gray-700 p-4 flex-col rounded-2xl justify-between items-center">
+    <div className="flex w-96 h-56 bg-gray-700 p-4 flex-col rounded-2xl justify-between items-center text-white">
       <div className="flex w-full">
         <div>
           <Image
@@ -69,18 +116,30 @@ const CardComponent: React.FC<CardProps> = ({ character }) => {
         </div>
       </div>
       <div className="flex justify-center gap-3">
-        <span
-          className="bg-white text-slate-950 p-1 rounded-md w-28 flex justify-center align-middle cursor-pointer font-bold hover:bg-slate-400"
-          onClick={() => router.push(`/${character.id}`)}
-        >
-          Details
-        </span>
-        <span
-          className="bg-white text-slate-950 p-1 rounded-md w-28 flex justify-center align-middle cursor-pointer font-bold hover:bg-slate-400"
-          onClick={() => router.push("/favorites")}
-        >
-          Add Favorite
-        </span>
+        {router.pathname === "/" ? (
+          <span
+            className="bg-white text-slate-950 p-1 rounded-md w-28 flex justify-center align-middle cursor-pointer font-bold hover:bg-slate-400"
+            onClick={() => router.push(`/${character.id}`)}
+          >
+            Details
+          </span>
+        ) : null}
+        {router.pathname === "/" ? (
+          <span
+            className="bg-white text-slate-950 p-1 rounded-md w-28 flex justify-center align-middle cursor-pointer font-bold hover:bg-slate-400"
+            onClick={handlerNewFavorite}
+          >
+            Add Favorite
+          </span>
+        ) : null}
+        {router.pathname === "/favorites" ? (
+          <span
+            className="bg-white text-slate-950 p-1 rounded-md w-28 flex justify-center align-middle cursor-pointer font-bold hover:bg-slate-400"
+            onClick={handlerDeleteFavorite}
+          >
+            Delete
+          </span>
+        ) : null}
       </div>
     </div>
   );
