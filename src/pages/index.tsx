@@ -17,23 +17,7 @@ import ErrorComponent from "@/components/ErrorComponent";
 import CardComponent from "@/components/CardComponent";
 import next from "../assets/next.svg";
 import prev from "../assets/prev.svg";
-
-interface Character {
-  id: string;
-  name: string;
-  status: string;
-  species: string;
-  image: string;
-  origin: {
-    name: string;
-  };
-}
-
-interface CharacterData {
-  characters: {
-    results: Character[];
-  };
-}
+import { CharacterData, RootState } from "@/types/types";
 
 const GET_CHARACTERS_BY_NAME = gql`
   query GetCharacterByName($name: String, $page: Int) {
@@ -55,11 +39,8 @@ const GET_CHARACTERS_BY_NAME = gql`
 export default function Home(): JSX.Element {
   const [name, setName] = useState<string>("");
   const [isInputError, setIsInputError] = useState<boolean>(false);
-  /* const [welcome, setWelcome] = useState<boolean>(true); */
   const [queryLoading, setQueryLoading] = useState<boolean>(false);
   const [queryError, setQueryError] = useState<boolean>(false);
-  /* const [allData, setAllData] = useState<Character[]>([]); */
-  /* const [showData, setShowData] = useState<Character[]>([]); */
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [serverPage, setServerPage] = useState<number>(1);
   const [getDataFinished, setGetDataFinished] = useState(false);
@@ -129,7 +110,6 @@ export default function Home(): JSX.Element {
 
       setQueryLoading(false);
       dispatch(modifyAllData([...allData, ...data?.characters?.results]));
-      /* setAllData([...allData, ...data?.characters?.results]); */
       setGetDataFinished(true);
     } catch (error) {
       setQueryError(true);
@@ -143,7 +123,6 @@ export default function Home(): JSX.Element {
     }
 
     dispatch(modifyShowData([]));
-    /* setShowData([]); */
 
     const firstIndex = pageSize * currentPage - pageSize;
     const lastIndex = currentPage * pageSize;
@@ -155,7 +134,6 @@ export default function Home(): JSX.Element {
 
     const charactersToShow = allData.slice(firstIndex, lastIndex);
     dispatch(modifyShowData(charactersToShow));
-    /* setShowData(charactersToShow); */
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -169,9 +147,7 @@ export default function Home(): JSX.Element {
     }
 
     dispatch(modifyAllData([]));
-    /* setAllData([]); */
     dispatch(modifyShowData([]));
-    /* setShowData([]); */
     setCurrentPage(1);
     setServerPage(1);
     setQueryError(false);
@@ -181,7 +157,6 @@ export default function Home(): JSX.Element {
     }
 
     dispatch(modifyWelcome(false));
-    /* setWelcome(false); */
   };
 
   const handleNext = () => {

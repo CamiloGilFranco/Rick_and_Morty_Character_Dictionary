@@ -1,13 +1,16 @@
-import SearchBarComponent from "@/components/SearchBarComponent";
 import React, { useEffect, useState } from "react";
 import CardComponent from "@/components/CardComponent";
+import { Character } from "@/types/types";
 
 const favorites = () => {
   const [savedData, setSavedData] = useState([]);
   const [reRender, setReRender] = useState(false);
 
   useEffect(() => {
-    setSavedData(JSON.parse(localStorage.getItem("favorites")));
+    const data = localStorage.getItem("favorites");
+    if (data !== null) {
+      setSavedData(JSON.parse(data));
+    }
   }, [reRender]);
 
   return (
@@ -18,7 +21,7 @@ const favorites = () => {
       {savedData?.length ? (
         <div className="h-full w-full flex justify-center flex-col items-center">
           <div className="w-11/12 max-w-[1200px] flex flex-wrap items-center justify-center gap-4 py-5 ">
-            {savedData.map((character) => {
+            {savedData.map((character: Character) => {
               return (
                 <CardComponent
                   character={character}

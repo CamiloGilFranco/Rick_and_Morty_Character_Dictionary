@@ -4,7 +4,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { Provider } from "react-redux";
 import store from "@/store/store";
 import { ToastContainer, toast } from "react-toastify";
-import toastStyle from "react-toastify/dist/ReactToastify.css";
+import "react-toastify/dist/ReactToastify.css";
 
 const client = new ApolloClient({
   uri: "https://rickandmortyapi.com/graphql",
@@ -16,11 +16,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <ApolloProvider client={client}>
       <Provider store={store}>
         <Component {...pageProps} />;
-        <ToastContainer
-          className={toastStyle}
-          position="bottom-center"
-          theme="colored"
-        />
+        <ToastContainer position="bottom-center" theme="colored" />
       </Provider>
     </ApolloProvider>
   );

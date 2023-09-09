@@ -2,21 +2,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import React from "react";
 import { toast } from "react-toastify";
-
-interface Character {
-  id: string;
-  name: string;
-  status: string;
-  species: string;
-  image: string;
-  origin: {
-    name: string;
-  };
-}
-
-interface CardProps {
-  character: Character;
-}
+import { Character, CardProps } from "@/types/types";
 
 const CardComponent: React.FC<CardProps> = ({
   character,
@@ -47,37 +33,45 @@ const CardComponent: React.FC<CardProps> = ({
       return;
     }
 
-    const savedData = JSON.parse(localStorage.getItem("favorites"));
+    const savedDataString = localStorage.getItem("favorites");
 
-    const existingFavorite = savedData.some(
-      (element) => element.id === character.id
-    );
+    if (savedDataString !== null) {
+      const savedData = JSON.parse(savedDataString) as Character[];
 
-    if (existingFavorite) {
-      toast.error("This character is already on your favorites list");
-    } else {
-      localStorage.setItem(
-        "favorites",
-        JSON.stringify([...savedData, character])
+      const existingFavorite = savedData.some(
+        (element) => element.id === character.id
       );
-      toast.success(
-        "The character was added to your favorites list successfully"
-      );
+
+      if (existingFavorite) {
+        toast.error("This character is already on your favorites list");
+      } else {
+        localStorage.setItem(
+          "favorites",
+          JSON.stringify([...savedData, character])
+        );
+        toast.success(
+          "The character was added to your favorites list successfully"
+        );
+      }
     }
   };
 
   const handlerDeleteFavorite = () => {
-    const data = JSON.parse(localStorage.getItem("favorites"));
+    const dataString = localStorage.getItem("favorites");
 
-    const index = data.findIndex((e) => e.id === character.id);
+    if (dataString !== null) {
+      const data = JSON.parse(dataString) as Character[];
 
-    data.splice(index, 1);
+      const index = data.findIndex((e) => e.id === character.id);
 
-    localStorage.setItem("favorites", JSON.stringify(data));
+      data.splice(index, 1);
 
-    toast.success("the character was removed from your favorites list");
+      localStorage.setItem("favorites", JSON.stringify(data));
 
-    setReRender(!reRender);
+      toast.success("the character was removed from your favorites list");
+
+      setReRender(!reRender);
+    }
   };
 
   return (

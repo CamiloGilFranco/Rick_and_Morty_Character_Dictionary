@@ -4,24 +4,7 @@ import React from "react";
 import styles from "./styles.module.css";
 import Image from "next/image";
 import LoaderComponent from "@/components/LoaderComponent";
-
-interface Character {
-  character: {
-    id: string;
-    name: string;
-    status: string;
-    species: string;
-    type: string;
-    gender: string;
-    origin: {
-      name: string;
-    };
-    location: {
-      name: string;
-    };
-    image: string;
-  };
-}
+import { CharacterExtended, Character, SingleCharacter } from "@/types/types";
 
 const characterData = gql`
   query GetCharacterByID($id: ID!) {
@@ -46,12 +29,12 @@ const characterData = gql`
 const character = () => {
   const router = useRouter();
 
-  const { data, loading, error } = useQuery<Character>(characterData, {
+  const { data, loading, error } = useQuery<CharacterExtended>(characterData, {
     variables: { id: router.query.character },
   });
 
-  const iconColor = (character: Character) => {
-    switch (data.character.status) {
+  const iconColor = (character: SingleCharacter) => {
+    switch (data?.character.status) {
       case "Alive":
         return "bg-green-500";
       case "unknown":
