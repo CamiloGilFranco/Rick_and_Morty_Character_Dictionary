@@ -2,6 +2,12 @@ import React, { useState, useEffect } from "react";
 import { gql } from "@apollo/client/core";
 import { useQuery } from "@apollo/client/react";
 import Image from "next/image";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  modifyAllData,
+  modifyShowData,
+  modifyWelcome,
+} from "@/store/slices/querySlice";
 
 import SearchBarComponent from "@/components/SearchBarComponent";
 import WelcomeComponent from "@/components/WelcomeComponent";
@@ -11,23 +17,7 @@ import ErrorComponent from "@/components/ErrorComponent";
 import CardComponent from "@/components/CardComponent";
 import next from "../assets/next.svg";
 import prev from "../assets/prev.svg";
-
-interface Character {
-  id: string;
-  name: string;
-  status: string;
-  species: string;
-  image: string;
-  origin: {
-    name: string;
-  };
-}
-
-interface CharacterData {
-  characters: {
-    results: Character[];
-  };
-}
+import { CharacterData, RootState } from "@/types/types";
 
 const GET_CHARACTERS_BY_NAME = gql`
   query GetCharacterByName($name: String, $page: Int) {
@@ -49,11 +39,8 @@ const GET_CHARACTERS_BY_NAME = gql`
 export default function Home(): JSX.Element {
   const [name, setName] = useState<string>("");
   const [isInputError, setIsInputError] = useState<boolean>(false);
-  const [welcome, setWelcome] = useState<boolean>(true);
   const [queryLoading, setQueryLoading] = useState<boolean>(false);
   const [queryError, setQueryError] = useState<boolean>(false);
-  const [allData, setAllData] = useState<Character[]>([]);
-  const [showData, setShowData] = useState<Character[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [serverPage, setServerPage] = useState<number>(1);
   const [getDataFinished, setGetDataFinished] = useState(false);
@@ -61,6 +48,11 @@ export default function Home(): JSX.Element {
 
   const pageSize = 6;
   const serverResultSize = 20;
+
+  const dispatch = useDispatch();
+  const allData = useSelector((state: RootState) => state.querySlice.allData);
+  const showData = useSelector((state: RootState) => state.querySlice.showData);
+  const welcome = useSelector((state: RootState) => state.querySlice.welcome);
 
   useEffect(() => {
     renderData();
@@ -97,6 +89,10 @@ export default function Home(): JSX.Element {
       return;
     }
 
+    if (name.length < 2) {
+      return;
+    }
+
     setGetDataFinished(false);
 
     try {
@@ -113,7 +109,7 @@ export default function Home(): JSX.Element {
       }
 
       setQueryLoading(false);
-      setAllData([...allData, ...data?.characters?.results]);
+      dispatch(modifyAllData([...allData, ...data?.characters?.results]));
       setGetDataFinished(true);
     } catch (error) {
       setQueryError(true);
@@ -126,7 +122,7 @@ export default function Home(): JSX.Element {
       return;
     }
 
-    setShowData([]);
+    dispatch(modifyShowData([]));
 
     const firstIndex = pageSize * currentPage - pageSize;
     const lastIndex = currentPage * pageSize;
@@ -137,7 +133,7 @@ export default function Home(): JSX.Element {
     }
 
     const charactersToShow = allData.slice(firstIndex, lastIndex);
-    setShowData(charactersToShow);
+    dispatch(modifyShowData(charactersToShow));
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -150,8 +146,8 @@ export default function Home(): JSX.Element {
       setIsInputError(false);
     }
 
-    setAllData([]);
-    setShowData([]);
+    dispatch(modifyAllData([]));
+    dispatch(modifyShowData([]));
     setCurrentPage(1);
     setServerPage(1);
     setQueryError(false);
@@ -160,7 +156,7 @@ export default function Home(): JSX.Element {
       getData();
     }
 
-    setWelcome(false);
+    dispatch(modifyWelcome(false));
   };
 
   const handleNext = () => {
