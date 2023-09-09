@@ -70,7 +70,9 @@ const CardComponent: React.FC<CardProps> = ({
 
       toast.success("the character was removed from your favorites list");
 
-      setReRender(!reRender);
+      if (setReRender && reRender !== undefined) {
+        setReRender(!reRender ?? false);
+      }
     }
   };
 
